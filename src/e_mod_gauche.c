@@ -100,7 +100,7 @@ report_error(ScmObj c)
 }
 
 int
-e_mod_gauche_init(const char *modulepath, const char *scriptfile)
+e_mod_gauche_init(const char *scriptfile)
 {
    int exit_code = 0;
    ScmObj av = SCM_NIL;
@@ -119,8 +119,6 @@ e_mod_gauche_init(const char *modulepath, const char *scriptfile)
 	av = SCM_LIST1(SCM_MAKE_STR_IMMUTABLE("egauche"));
 
 	SCM_DEFINE(Scm_UserModule(), "*program-name*", SCM_CDR(av));
-
-	Scm_AddLoadPath(modulepath, FALSE);
 
 	initialized_p = 1;
    }
