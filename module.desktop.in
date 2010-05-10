@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=EGauche
+Icon=e-module-egauche
+Comment=A module to embed Gauche in E.
+X-Enlightenment-ModuleType=system
