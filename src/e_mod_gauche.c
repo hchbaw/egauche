@@ -1,3 +1,4 @@
+/* START of the adaption. (main.c - interpreter main program) */
 
 /*
  * main.c - interpreter main program
@@ -154,4 +155,43 @@ e_mod_gauche_init(const char *scriptfile)
    }
 
    return exit_code;
+}
+
+/* END of the adaption. (main.c - interpreter main program) */
+
+int
+e_mod_gauche_shutdown()
+{
+   int exit_code = 0;
+   ScmObj shutdownproc;
+
+   shutdownproc = Scm_SymbolValue(Scm_UserModule(),
+				  SCM_SYMBOL(SCM_INTERN("shutdown")));
+   if (SCM_PROCEDUREP(shutdownproc)) {
+	ScmObj r = Scm_ApplyRec(shutdownproc, SCM_NIL);
+	if (SCM_INTP(r)) {
+	     exit_code = SCM_INT_VALUE(r);
+	} else {
+	     exit_code = 70;
+	}
+   }
+
+   Scm_Cleanup();
+
+   return exit_code;
+}
+
+int
+e_mod_gauche_eval(const char *form)
+{
+   ScmEvalPacket epak;
+
+   if (Scm_EvalCString(form,
+		       SCM_OBJ(Scm_UserModule()),
+		       &epak) < 0) {
+	report_error(epak.exception);
+	return -1;
+   }
+
+   return 0;
 }
