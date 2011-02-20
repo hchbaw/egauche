@@ -13,3 +13,13 @@ ew.h ew.c
 module_la_LIBADD = @E_LIBS@ @gauche_libs@
 module_la_LDFLAGS = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
+
+## testing.
+bindir = $(datadir)/$(MODULE_ARCH)
+bin_PROGRAMS = \
+main
+
+main_SOURCES = \
+main.c
+
+main_LDADD = e_mod_gauche.o @E_LIBS@ @gauche_libs@
